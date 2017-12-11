@@ -1,0 +1,52 @@
+
+CC	= @CC@
+CFLAGS	= @CFLAGS@
+
+prefix	= @prefix@
+exec_prefix = @exec_prefix@
+program_transform_name = @program_transform_name@
+
+BINDIR	= @bindir@
+MANDIR	= @mandir@
+MAN1DIR	= $(MANDIR)/man1
+MAN1SUFFIX	= 1
+
+INSTALL	= @INSTALL@
+MAKEINSTALLDIR = \
+	dir= ;\
+	for path in `echo $$DIR | sed 's,/, ,g'`; do\
+		dir=$$dir/$$path;\
+		[ -d $$dir ] || (set -x; mkdir $$dir) || exit;\
+	done
+INSTALL_PROGRAM	= @INSTALL_PROGRAM@
+INSTALL_DATA	= @INSTALL_DATA@
+
+msdump: msdump.o
+
+clean::
+	$(RM) msdump
+
+install:: install-program install-man
+
+install-program: msdump
+	@DIR=$(BINDIR); $(MAKEINSTALLDIR)
+	$(INSTALL_PROGRAM) msdump $(BINDIR)/`echo msdump | sed '$(program_transform_name)'`
+
+install-man: msdump.1
+	@DIR=$(MAN1DIR); $(MAKEINSTALLDIR)
+	$(INSTALL_DATA) msdump.1 $(MAN1DIR)/`echo msdump | sed '$(program_transform_name)'`.$(MAN1SUFFIX)
+
+clean::
+	$(RM) core a.out *.o *~ "#"*
+
+moreclean:: clean
+	$(RM) config.log config.cache config.status Makefile
+
+distclean:: moreclean
+	$(RM) configure
+
+archive:: moreclean
+	@wd=`pwd`; dir=`dirname $$wd`; base=`basename $$wd`;\
+	archive=$$base-`date +%Y%m%d`.tar.gz;\
+	echo Cleating $$dir/$$archive ...;\
+	cd $$dir; tar cvbf 1 - $$base | gzip -9 > $$dir/$$archive

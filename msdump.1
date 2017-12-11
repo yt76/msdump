@@ -1,0 +1,43 @@
+.\" Copyright (C) 1997,1998 Kyoto University Microcomputer Club
+.ds Dt 1998/04/18
+.TH MSDUMP 1K "\*(Dt" "KMC" "KMC Tools"
+.SH NAME
+msdump \- hexadecimal dump of file like M$-DOS `dump.exe'
+.SH SYNOPSYS
+.B msdump [\-\c
+.I offset\c
+.B ] [\-x\c
+.I hexadecimal offset\c
+.B ] [file...]
+.SH DESCRIPTION
+This program dumps contents of one or more specified files in hexadecimal.
+Its output is similar with that of `\|\c
+.I DUMP.EXE\c
+\&\|' of M$-DOS. Each output lines begin with 8 digit hexadecimal
+reprsentation of offset in the file, followed by hexadecimal reprentations
+of each bytes (up to 16 bytes in a line), and ends up with ascii dump of
+contents, in which non\-printable characters are printed as `.'.
+For readability, one hyphen will be printed between 8th and 9th hexadecimal
+bytes of each line.
+
+.SS OPTIONS
+.TP
+.BI \- offset
+Specify start offset of dump. If
+.I offset
+begins with \`0\', it will be treated as octal number. If it begins with
+\`0x\', as hexadecimal number.
+.TP
+.BI \-x "hexadecimal offset"
+Identical with `\|\c
+.BI \-0x "hexadecimal offset"\c
+\&\|'.
+
+.SH AUTHOR
+TABATA Yusuke wrote `dump()' function first.
+.PP
+UGAWA Tomoharu wrote other important parts of this program.
+.PP
+KAWASAKI Shin'ichiro added some options to it.
+.PP
+TAKAI Kousuke wrote this manual page.

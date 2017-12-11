@@ -1,0 +1,8 @@
+dnl configure for msdump
+
+AC_INIT(msdump.c)
+
+AC_PROG_CC
+AC_PROG_INSTALL
+
+AC_OUTPUT(Makefile)
